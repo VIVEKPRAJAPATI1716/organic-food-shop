@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<!-- breadcrumb area start -->
+<div class="breadcrumb_container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home ></a></li>
+                        <li>UPI Payment</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- breadcrumb area end -->
+
+<div class="main-content-area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 offset-lg-2">
+                <div class="payment-container">
+                    <div class="payment-header">
+                        <h2><i class="fa fa-qrcode" style="color: #78a206;"></i> UPI Payment</h2>
+                        <p>Complete your payment using any UPI app like PhonePe, GPay, or Paytm</p>
+                    </div>
+
+                    <div class="order-details">
+                        <h4><i class="fa fa-shopping-basket"></i> Order Summary</h4>
+                        <div class="row">
+                            <div class="col-sm-6 mb-2">
+                                <span style="color: #777;">Order Reference:</span>
+                                <strong style="display: block;">#{{ order.id }}</strong>
+                            </div>
+                            <div class="col-sm-6 mb-2 text-sm-right">
+                                <span style="color: #777;">Payable Amount:</span>
+                                <strong style="display: block; color: #78a206; font-size: 22px;">₹{{ total }}</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="qr-container">
+                        <div class="qr-wrapper">
+                            <div class="qr-inner">
+                                <img src="{% static 'assets/img/upi_qr.jpeg' %}" alt="UPI QR Code" class="qr-code-img">
+                            </div>
+                        </div>
+                        
+                        <div class="upi-info">
+                            <p style="margin: 0; font-size: 16px;">
+                                <strong>UPI ID:</strong> 
+                                <span style="color: #78a206; font-weight: 700;">vivekprajapati1716@oksbi</span>
+                            </p>
+                        </div>
+                        
+                        <div style="margin-top: 25px;">
+                            <a href="{{ upi_payment_url }}" class="btn btn-success" 
+                               style="padding: 12px 30px; border-radius: 4px; font-weight: 600; background: #78a206; border: none;"
+                               onclick="return confirm('Open UPI app with amount ₹{{ total }}?');">
+                                <i class="fa fa-mobile"></i> Pay via Mobile App
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="instructions">
+                        <h5><i class="fa fa-info-circle"></i> Instructions</h5>
+                        <ul style="padding-left: 20px; list-style-type: decimal;">
+                            <li>Open your preferred UPI App (PhonePe, GPay, etc.)</li>
+                            <li>Scan the QR code shown above</li>
+                            <li>Enter the exact amount: <strong style="color: #78a206;">₹{{ total }}</strong></li>
+                            <li>Enter your UPI PIN to complete payment</li>
+                            <li><strong>Important:</strong> Copy the Transaction ID after successful payment</li>
+                        </ul>
+                    </div>
+
+                    <div class="verification-box">
+                        <h5 style="margin-top: 0; font-weight: 700;"><i class="fa fa-shield"></i> Confirm Transaction</h5>
+                        <p style="margin-bottom: 20px; font-size: 14px; color: #555;">
+                            Please enter your 12-digit UPI Transaction ID / Reference Number below to confirm your order.
+                        </p>
+                        
+                        <form action="{% url 'upi_payment_confirm' order.id %}" method="POST" onsubmit="return validateForm();">
+                            {% csrf_token %}
+                            
+                            <div class="form-group">
+                                <label for="transaction_id" style="font-weight: 600; display: block; margin-bottom: 8px;">
+                                    Transaction ID / Ref No. <span style="color: red;">*</span>
+                                </label>
+                                <input type="text" id="transaction_id" name="transaction_id" required
+                                       placeholder="e.g. 123456789012" class="form-control"
+                                       style="width: 100%; height: 45px; border: 1px solid #ddd; border-radius: 4px;">
+                            </div>
+                            
+                            <div class="form-group mb-4">
+                                <label style="display: flex; align-items: center; cursor: pointer; font-weight: normal;">
+                                    <input type="checkbox" id="payment_confirmed" name="payment_confirmed" required
+                                           style="width: 18px; height: 18px; margin-right: 10px;">
+                                    <span>I have paid <strong>₹{{ total }}</strong> successfully</span>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="submit-btn">
+                                <i class="fa fa-check-circle"></i> Confirm Order
+                            </button>
+                        </form>
+                    </div>
+
+                    <div class="help-section">
+                        <h5><i class="fa fa-headphones"></i> Facing issues?</h5>
+                        <p style="color: #777;">
+                            Email: <strong>organicfoodshop2026@gmail.com</strong> | 
+                            Call: <strong>+91 88496 52715</strong>
+                        </p>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 35px;">
+                        <a href="{% url 'checkout' %}" style="color: #78a206; font-weight: 600;">
+                            <i class="fa fa-angle-double-left"></i> Back to Checkout
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function validateForm() {
+    var txnId = document.getElementById('transaction_id').value.trim();
+    var confirmed = document.getElementById('payment_confirmed').checked;
+    
+    if (txnId.length < 8) {
+        alert('Please enter a valid Transaction ID');
+        return false;
+    }
+    if (!confirmed) {
+        alert('Please check the confirmation box');
+        return false;
+    }
+    return true;
+}
+</script>
+
+<link rel="stylesheet" href="{% static 'assets/css/upi_payment.css' %}">
+
+{% endblock %}

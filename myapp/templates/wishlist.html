@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<!--breadcrumb area start-->
+<div class="breadcrumb_container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home ></a></li>
+                        <li>Wishlist</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumb area end-->
+<div class="cart_main_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <form action="#">
+                    <div class="table-content table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="img-thumbnail">Image</th>
+                                    <th class="product-name">Product</th>
+                                    <th class="product-price">Price</th>
+                                    <th class="product-add-to-cart">Add to Cart</th>
+                                    <th class="product-remove">Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for item in wishlist_items %}
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <a href="{% url 'productdetails' %}?cid={{item.product.id}}">
+                                            <img src="{{item.product.product_image.url}}" alt="">
+                                        </a>
+                                    </td>
+                                    <td class="product-name">
+                                        <a href="{% url 'productdetails' %}?cid={{item.product.id}}">{{item.product.product_name}}</a>
+                                    </td>
+                                    <td class="product-price"><span class="amount">₹{{item.product.price}}</span></td>
+                                    <td class="product-add-to-cart">
+                                        {% if item.product.stock > 0 %}
+                                        <a href="{% url 'add_to_cart' item.product.id %}" class="btn btn-primary" style="background-color: #78a206; border-color: #78a206; color: white; padding: 5px 10px;">Add to Cart</a>
+                                        {% else %}
+                                        <button class="btn btn-danger" style="padding: 5px 10px;" disabled>Out of Stock</button>
+                                        {% endif %}
+                                    </td>
+                                    <td class="product-remove"><a href="{% url 'remove_from_wishlist' item.id %}">x</a></td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="5" class="text-center">Your wishlist is empty. <a href="{% url 'shop' %}">Go Shopping</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

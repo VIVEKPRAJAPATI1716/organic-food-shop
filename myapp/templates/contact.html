@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<!--breadcrumb area start-->
+<div class="breadcrumb_container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="{% url 'index' %}">Home ></a>
+                        </li>
+                        <li>Feedback</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumb area end-->
+
+<!--contact area start-->
+<div class="contact_area ptb-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 col-md-12">
+                <div class="contact_info_wrapper" style="background: #f9f9f9; padding: 40px; border-radius: 10px;">
+                    <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 20px;">Contact Us</h3>
+                    <p style="margin-bottom: 30px;">We value your feedback! Please feel free to reach out to us with any questions, suggestions, or concerns.</p>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="display: flex; margin-bottom: 20px;">
+                            <i class="fa fa-map-marker" style="font-size: 20px; color: #78a206; width: 30px; margin-top: 5px;"></i>
+                            <div>
+                                <strong>Address:</strong><br>
+                                Maruti Plaza, Radhanpur,<br>
+                                Patan, Gujarat - INDIA.
+                            </div>
+                        </li>
+                        <li style="display: flex; margin-bottom: 20px;">
+                            <i class="fa fa-phone" style="font-size: 20px; color: #78a206; width: 30px; margin-top: 5px;"></i>
+                            <div>
+                                <strong>Phone:</strong><br>
+                                <a href="tel:+918849652715">+(91) 88496 52715</a><br>
+                                <a href="tel:+916352954772">+(91) 63529 54772</a>
+                            </div>
+                        </li>
+                        <li style="display: flex; margin-bottom: 20px;">
+                            <i class="fa fa-envelope" style="font-size: 20px; color: #78a206; width: 30px; margin-top: 5px;"></i>
+                            <div>
+                                <strong>Email:</strong><br>
+                                <a href="mailto:organicfoodshop2026@gmail.com">organicfoodshop2026@gmail.com</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-12">
+                <div class="contact_form_wrapper" style="padding-left: 30px;">
+                    <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 30px;">Send Us Your Feedback</h3>
+                    <form action="{% url 'feedback' %}" method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group mb-20">
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Your Name *</label>
+                                    <input type="text" name="name" class="form-control" style="height: 50px; border-radius: 5px; border: 1px solid #ddd; {% if user_data %}background-color: #f0f0f0;{% endif %}" 
+                                        placeholder="Enter your name" required minlength="2" 
+                                        {% if user_data %}value="{{ user_data.first_name }} {{ user_data.last_name }}" readonly{% endif %}>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-20">
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Your Email *</label>
+                                    <input type="email" name="email" class="form-control" style="height: 50px; border-radius: 5px; border: 1px solid #ddd; {% if user_data %}background-color: #f0f0f0;{% endif %}" 
+                                        placeholder="Enter your email" required 
+                                        {% if user_data %}value="{{ user_data.email }}" readonly{% endif %}>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group mb-20">
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Phone Number *</label>
+                                    <input type="tel" name="contact" class="form-control" style="height: 50px; border-radius: 5px; border: 1px solid #ddd; {% if user_data %}background-color: #f0f0f0;{% endif %}" 
+                                        placeholder="Enter phone number" required pattern="[0-9]{10,15}"
+                                        {% if user_data %}value="{{ user_data.phone }}" readonly{% endif %}>
+                                </div>
+                            </div>
+                            
+                            <div class="col-lg-6">
+                                <div class="form-group mb-20">
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Subject *</label>
+                                    <input type="text" name="subject" class="form-control" style="height: 50px; border-radius: 5px; border: 1px solid #ddd;" placeholder="Enter subject" required minlength="5">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group mb-30">
+                                    <label style="display: block; margin-bottom: 8px; font-weight: 600;">Your Message *</label>
+                                    <textarea name="comment" class="form-control" style="height: 150px; border-radius: 5px; border: 1px solid #ddd; padding: 15px;" placeholder="Write your feedback here..." required minlength="10"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="contact_submit">
+                                    <button type="submit" style="background: #78a206; color: #fff; border: none; padding: 12px 35px; border-radius: 30px; font-weight: 700; text-transform: uppercase; transition: 0.3s; cursor: pointer;">Submit Feedback</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--contact area end-->
+
+{% endblock %}

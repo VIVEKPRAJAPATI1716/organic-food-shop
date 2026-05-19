@@ -1,0 +1,38 @@
+/* Custom Admin Styles for Organic Food Shop */
+
+.admin-row-actions {
+    display: flex;
+    gap: 10px; /* Adds space between the buttons */
+    align-items: center;
+}
+
+.btn-admin-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    color: white !important;
+    transition: all 0.3s ease;
+}
+
+.btn-admin-edit {
+    background-color: #28a745; /* Success Green */
+}
+
+.btn-admin-edit:hover {
+    background-color: #218838;
+}
+
+.btn-admin-delete {
+    background-color: #dc3545; /* Danger Red */
+}
+
+.btn-admin-delete:hover {
+    background-color: #c82333;
+}
+
+.btn-admin-action i {
+    font-size: 14px;
+}

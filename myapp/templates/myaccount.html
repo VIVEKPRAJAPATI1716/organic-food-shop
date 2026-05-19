@@ -1,0 +1,212 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<!-- Link to new custom CSS for My Account page -->
+<link rel="stylesheet" href="{% static 'assets/css/myaccount.css' %}">
+
+<!--breadcrumb area start-->
+<div class="breadcrumb_container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home</a> ></li>
+                        <li>My account</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumb area end-->
+
+<section class="myaccount_area ptb-100">
+    <div class="container">
+        <div class="row">
+            <!-- Sidebar -->
+            <div class="col-lg-3 col-md-4 mb-30">
+                <div class="myaccount-sidebar">
+                    <div class="myaccount-hero-avatar text-center mx-auto mt-30">
+                        {{ user.first_name|slice:":1" }}{{ user.last_name|slice:":1" }}
+                    </div>
+                    <div class="text-center mb-30 px-3">
+                        <h4 class="font-weight-bold">{{ user.first_name }} {{ user.last_name }}</h4>
+                        <p class="text-muted small">{{ user.email }}</p>
+                    </div>
+                    <ul class="nav flex-column dashboard-list" role="tablist">
+                        <li><a href="#dashboard" data-toggle="tab" class="myaccount-nav-link active"><i class="fa fa-th-large"></i> Dashboard</a></li>
+                        <li><a href="#orders" data-toggle="tab" class="myaccount-nav-link"><i class="fa fa-shopping-basket"></i> Orders</a></li>
+                        <li><a href="#account-details" data-toggle="tab" class="myaccount-nav-link"><i class="fa fa-user-circle"></i> Profile Info</a></li>
+                        <li><a href="{% url 'myorder' %}" class="myaccount-nav-link"><i class="fa fa-history"></i> Order History</a></li>
+                        <li><a href="{% url 'logout' %}" class="myaccount-nav-link text-danger"><i class="fa fa-sign-out"></i> Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Tab Content -->
+            <div class="col-lg-9 col-md-8">
+                <div class="tab-content dashboard-content">
+                    
+                    <!-- DASHBOARD TAB -->
+                    <div class="tab-pane fade show active" id="dashboard">
+                        <div class="myaccount-card">
+                            <div class="myaccount-card-body">
+                                <h3 class="mb-10">Welcome back, {{ user.first_name }}! 👋</h3>
+                                <p class="text-muted">From your account dashboard you can view your recent orders, manage your shipping and billing addresses, and edit your password and account details.</p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-4 col-md-6 mb-30">
+                                <div class="myaccount-stats-card">
+                                    <div class="myaccount-stats-icon"><i class="fa fa-shopping-cart"></i></div>
+                                    <div class="myaccount-stats-value">{{ total_orders }}</div>
+                                    <div class="myaccount-stats-label">Total Orders</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-30">
+                                <div class="myaccount-stats-card">
+                                    <div class="myaccount-stats-icon"><i class="fa fa-truck"></i></div>
+                                    <div class="myaccount-stats-value">{{ pending_orders|add:placed_orders|add:shipped_orders }}</div>
+                                    <div class="myaccount-stats-label">Active Orders</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-4 col-md-6 mb-30">
+                                <div class="myaccount-stats-card">
+                                    <div class="myaccount-stats-icon"><i class="fa fa-money"></i></div>
+                                    <div class="myaccount-stats-value">₹{{ total_spent }}</div>
+                                    <div class="myaccount-stats-label">Total Spent</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 mb-30">
+                                <div class="myaccount-stats-card" style="border-bottom: 4px solid #28a745;">
+                                    <div class="myaccount-stats-icon text-success"><i class="fa fa-check-circle"></i></div>
+                                    <div class="myaccount-stats-value">{{ delivered_orders }}</div>
+                                    <div class="myaccount-stats-label">Delivered</div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 mb-30">
+                                <div class="myaccount-stats-card" style="border-bottom: 4px solid #dc3545;">
+                                    <div class="myaccount-stats-icon text-danger"><i class="fa fa-times-circle"></i></div>
+                                    <div class="myaccount-stats-value">{{ cancelled_orders }}</div>
+                                    <div class="myaccount-stats-label">Cancelled</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ORDERS TAB -->
+                    <div class="tab-pane fade" id="orders">
+                        <div class="myaccount-card">
+                            <div class="myaccount-card-header d-flex justify-content-between align-items-center">
+                                <h3>Recent Orders</h3>
+                                <a href="{% url 'myorder' %}" class="btn btn-sm btn-success rounded-pill px-3">Full History</a>
+                            </div>
+                            <div class="myaccount-card-body p-0">
+                                <div class="table-responsive">
+                                    <table class="table table-modern mb-0">
+                                        <thead>
+                                            <tr>
+                                                <th>Order ID</th>
+                                                <th>Date</th>
+                                                <th>Total</th>
+                                                <th>Payment</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {% for i in myorder %}
+                                            {% if forloop.counter <= 5 %}
+                                            <tr>
+                                                <td>#{{i.id}}</td>
+                                                <td>{{i.order_date|date:"M d, Y"}}</td>
+                                                <td>
+                                                    <strong>₹{{ i.total_amount }}</strong>
+                                                </td>
+                                                <td>
+                                                    <small class="text-muted">{{ i.payment_method }}</small>
+                                                </td>
+                                                <td>
+                                                    <span class="status-badge status-{{ i.order|lower }}">{{i.order}}</span>
+                                                </td>
+                                                <td>
+                                                    {% if i.order == 'Pending' or i.order == 'PLACED' %}
+                                                        <a href="{% url 'cancel_order' i.id %}" class="btn btn-sm btn-outline-danger px-3 rounded-pill" onclick="return confirm('Are you sure you want to cancel this order?')">Cancel</a>
+                                                    {% else %}
+                                                        <span class="text-muted small">-</span>
+                                                    {% endif %}
+                                                </td>
+                                            </tr>
+                                            {% endif %}
+                                            {% empty %}
+                                            <tr>
+                                                <td colspan="6" class="text-center py-5">
+                                                    <div class="text-muted">No orders found.</div>
+                                                    <a href="{% url 'shop' %}" class="btn btn-success mt-15 rounded-pill px-4">Shop Now</a>
+                                                </td>
+                                            </tr>
+                                            {% endfor %}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PROFILE INFO TAB -->
+                    <div class="tab-pane fade" id="account-details">
+                        <div class="myaccount-card">
+                            <div class="myaccount-card-header">
+                                <h3>Update Your Profile</h3>
+                            </div>
+                            <div class="myaccount-card-body">
+                                <form action="{% url 'myaccount' %}" method="POST">
+                                    {% csrf_token %}
+                                    <div class="row">
+                                        <div class="col-md-6 mb-20">
+                                            <div class="form-group">
+                                                <label class="font-weight-bold">First Name</label>
+                                                <input type="text" class="form-control form-control-modern" name="fname" value="{{user.first_name}}" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 mb-20">
+                                            <div class="form-group">
+                                                <label class="font-weight-bold">Last Name</label>
+                                                <input type="text" class="form-control form-control-modern" name="lname" value="{{user.last_name}}" required>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-20">
+                                            <div class="form-group">
+                                                <label class="font-weight-bold">Email Address</label>
+                                                <input type="email" class="form-control form-control-modern" name="email" value="{{user.email}}" readonly style="background: #f8f9fa;">
+                                                <small class="text-muted">Email address cannot be changed.</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 mb-30">
+                                            <div class="form-group">
+                                                <label class="font-weight-bold">New Password</label>
+                                                <input type="password" class="form-control form-control-modern" name="pass1" placeholder="Leave blank to keep current password">
+                                                <small class="text-muted">If you want to change your password, enter a new one here.</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <button type="submit" class="btn btn-modern btn-modern-primary">Save Changes</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

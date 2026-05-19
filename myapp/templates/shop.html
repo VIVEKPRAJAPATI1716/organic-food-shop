@@ -1,0 +1,251 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static '/assets/css/jquery-ui.css' %}">
+{% endblock %}
+
+{% block base %}
+<div class="breadcrumb_container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="{% url 'index' %}">Home ></a>
+                        </li>
+                        <li>shop</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<div class="organic_food_wrapper">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="categories_banner">
+                    <div class="categories_banner_inner">
+                        <img src="{% static '/assets/img/banner/shop.jpg' %}" alt="">
+                    </div>
+                    <h3>SHOP</h3>
+                </div>
+
+                <!-- Modern top toolbar: filter + sort on one line -->
+                <div class="shop-toolbar d-flex flex-wrap justify-content-between align-items-center mb-3">
+                    <div class="shop-toolbar-left">
+                        <p style="margin:0;font-size:14px;color:#555;">
+                            Showing <strong>{{ prod|length }}</strong> products
+                        </p>
+                    </div>
+                    <form action="{% url 'shop' %}" method="GET" class="shop-toolbar-form d-flex flex-wrap align-items-end">
+                        <div class="toolbar-group mr-3 mb-2">
+                            <label style="font-size:12px;color:#666;">Min Price</label>
+                            <input type="number" name="min_price" value="{{ request.GET.min_price }}" placeholder="0"
+                                   class="form-control form-control-sm" style="min-width:90px;">
+                            </div>
+                        <div class="toolbar-group mr-3 mb-2">
+                            <label style="font-size:12px;color:#666;">Max Price</label>
+                            <input type="number" name="max_price" value="{{ request.GET.max_price }}" placeholder="10000"
+                                   class="form-control form-control-sm" style="min-width:90px;">
+                            </div>
+                        <div class="toolbar-group mr-3 mb-2">
+                            <label style="font-size:12px;color:#666;">Sort By</label>
+                            <select name="sort" class="form-control form-control-sm" style="min-width:150px;">
+                                    <option value="">Default</option>
+                                    <option value="price_low" {% if request.GET.sort == 'price_low' %}selected{% endif %}>Price: Low to High</option>
+                                    <option value="price_high" {% if request.GET.sort == 'price_high' %}selected{% endif %}>Price: High to Low</option>
+                                    <option value="name_asc" {% if request.GET.sort == 'name_asc' %}selected{% endif %}>Name: A to Z</option>
+                                </select>
+                            </div>
+                        <div class="toolbar-actions mb-2">
+                            <button type="submit" class="btn btn-success btn-sm" style="margin-right:8px;">Apply</button>
+                            <a href="{% url 'shop' %}" class="btn btn-outline-secondary btn-sm">Reset</a>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="tab_product_wrapper">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="shop_active">
+                            <div class="row">
+                                {% for i in prod %}
+                                <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">
+                                    <div class="single__product">
+                                        <div class="single_product__inner">                            
+                                            <div class="product_img">
+                                                <a href="{% url 'productdetails' %}?cid={{i.id}}" title="Product-Details">
+                                                    <img src="{{i.product_image.url}}" alt="">
+                                                </a>
+                                            </div>
+                                            <div class="product__content text-center">
+                                                <div class="produc_desc_info">
+                                                    <div class="product_title">
+                                                                <h4>
+                                                                    <a href="{% url 'productdetails' %}">
+                                                                        {{ i.product_name }}
+                                                                    </a>
+                                                                </h4>
+                                                                <span style="display:block;font-size:12px;color:#777;">
+                                                                    {{ i.cat_name.cat_name }}
+                                                                </span>
+                                                    </div>
+                                                    <div class="product_price">
+                                                        <p>
+                                                            ₹{{ i.price }}
+                                                            {% if i.cat_name.id == 6 %}
+                                                                / kg
+                                                            {% elif i.cat_name.id == 7 %}
+                                                                / litre
+                                                            {% endif %}
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                <div class="product__hover">
+                                                    <ul>
+                                                        {% if i.stock > 0 %}
+                                                        <li><a href="/add_to_cart/{{i.id}}"><i class="ion-android-cart"
+                                                                    title="Buy Now"></i></a></li>
+                                                        {% else %}
+                                                        <li><a href="#" onclick="alert('Out of Stock')"><i class="ion-android-cart" style="color: grey;"
+                                                            title="Out of Stock"></i></a></li>
+                                                        {% endif %}
+                                                        
+                                                        <li><a href="{% url 'add_to_wishlist' i.id %}" title="Add to Wishlist"><i class="ion-android-favorite-outline"></i></a></li>
+                                                        
+                                                        <li><a href="{% url 'productdetails' %}?cid={{i.id}}"
+                                                                title="Product-Details"><i class="ion-clipboard"></i></a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% empty %}
+                                <div class="col-12">
+                                    <p style="padding:20px 0;text-align:center;color:#777;">No products found for selected filters.</p>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal area start -->
+{% for q in prod %}
+<div class="modal fade" id="my_modal{{q.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body shop">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <div class="product-flags madal">
+                                <div class="tab-content" id="pills-tabContent{{q.id}}">
+                                    <div class="tab-pane fade show active" id="imgeone{{q.id}}" role="tabpanel">
+                                        <div class="product_tab_img">
+                                            <a href="#"><img src="{{q.product_image.url}}" alt=""></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="products_tab_button  modals">
+                                    <ul class="nav product_navactive" role="tablist">
+                                        <li>
+                                            <a class="nav-link active" data-toggle="tab" href="#imgeone{{q.id}}" role="tab"
+                                                aria-controls="imgeone{{q.id}}" aria-selected="false"><img
+                                                    src="{{q.product_image.url}}" alt=""></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-12">
+                            <div class="modal_right">
+                                <div class="shop_reviews">
+                                    <div class="demo_product">
+                                        <h2>{{q.product_name}}</h2>
+                                    </div>
+                                    <div class="current_price">
+                                        <span class="regular_price">
+                                            ₹{{ q.price }}
+                                            {% if q.cat_name.id == 6 %}
+                                                / kg
+                                            {% elif q.cat_name.id == 7 %}
+                                                / litre
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="product_information product_modal">
+                                        <div class="product_variants">
+                                            <div class="quickview_plus_minus">
+                                                {% if q.cat_name.id == 6 %}
+                                                    <span class="control_label">Price & Quantity per Kg</span>
+                                                {% elif q.cat_name.id == 7 %}
+                                                    <span class="control_label">Price & Quantity per Litre</span>
+                                                {% else %}
+                                                    <span class="control_label">Standard Quantity</span>
+                                                {% endif %}
+                                                <div class="quickview_plus_minus_inner">
+                                                    <div class="cart-plus-minus">
+                                                        <input type="text" value="02" name="qtybutton"
+                                                            class="cart-plus-minus-box">
+                                                    </div>
+                                                    <div class="add_button add_modal">
+                                                        <ul style="display: flex; align-items: center;">
+                                                            {% if q.stock > 0 %}
+                                                            <li><a href="/add_to_cart/{{q.id}}"><i
+                                                                        class="btn btn-success">Add_To_Cart</i></a>
+                                                            </li>
+                                                            {% else %}
+                                                            <li><button class="btn btn-danger" disabled>Out of Stock</button></li>
+                                                            {% endif %}
+                                                            <li style="margin-left: 10px;"><a href="{% url 'add_to_wishlist' q.id %}" title="Add to Wishlist" style="font-size: 24px; color: #333;"><i class="ion-heart"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cart_description">
+                                                <p>{{q.description}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="social-share">
+                                <h3>Share this product</h3>
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+{% endblock %}
+
+{% block extra_js %}
+<script src="{% static '/assets/js/jquery-ui.js' %}"></script>
+{% endblock %}

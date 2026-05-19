@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<!--breadcrumb area start-->
+<div class="breadcrumb_container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home ></a></li>
+                        <li>Cart</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumb area end-->
+<section class="order-history-area ptb-100">
+    <div class="container">
+        <div class="premium-order-history-header d-flex justify-content-between align-items-center">
+            <div>
+                <h2>My Orders</h2>
+                <p>Track all your past and current orders in one place.</p>
+            </div>
+            <a href="{% url 'shop' %}" class="btn btn-success">Continue Shopping</a>
+        </div>
+
+        <div class="order-history-timeline">
+            {% for i in myorder %}
+            <div class="order-history-card">
+                <div class="order-history-left">
+                    <div class="order-id">#{{ i.id }}</div>
+                    <div class="order-date">{{ i.order_date|date:"M d, Y - h:i A" }}</div>
+                    <div class="order-address">
+                        <span>{{ i.address.address }}, {{ i.address.city }}, {{ i.address.state }}</span>
+                    </div>
+                </div>
+                <div class="order-history-middle">
+                    <div class="order-amount">₹{{ i.product }}</div>
+                    <div class="order-payment">
+                        {% if i.payment_method == 'PAYTM' or i.payment_method == 'Paytm' %}
+                            <span class="order-payment-badge payment-paytm">Paytm</span>
+                        {% elif i.payment_method == 'UPI' %}
+                            <span class="order-payment-badge payment-upi">UPI</span>
+                        {% else %}
+                            <span class="order-payment-badge payment-cod">COD</span>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="order-history-right">
+                    <span class="order-status-badge status-{{ i.order|lower }}">{{ i.order }}</span>
+                    {% if i.order == 'Pending' or i.order == 'PLACED' %}
+                        <a href="{% url 'cancel_order' i.id %}" class="btn btn-outline-danger btn-sm mt-2"
+                           onclick="return confirm('Are you sure you want to cancel this order?')">
+                            Cancel Order
+                        </a>
+                    {% endif %}
+                </div>
+            </div>
+            {% empty %}
+            <div class="order-history-empty text-center">
+                <h4>No orders yet</h4>
+                <p>Looks like you haven't placed any orders. Start shopping now!</p>
+                <a href="{% url 'shop' %}" class="btn btn-success">Browse Products</a>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+
+{% endblock %}

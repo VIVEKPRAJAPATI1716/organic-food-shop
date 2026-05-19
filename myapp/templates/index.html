@@ -1,0 +1,445 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block base %}
+
+<!--Slider start-->
+<div class="slider_area">
+    <div class="slider_list owl-carousel">
+        <div class="single_slide" style="background-image: url({% static 'assets/img/slider/1.jpg' %});">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="slider__content">
+                            <p>Exclusive Offer -10% Off This Week</p>
+                            <h2>Live <strong>healthy</strong> with a glass</h2>
+                            <h3>of <strong>fruit juice</strong> every day</h3>
+                            <h6>Starting at<span>₹44.99</span></h6>
+                            <div class="slider_btn">
+                                <a href="{% url 'shop' %}">Shopping now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="single_slide" style="background-image: url({% static 'assets/img/slider/2.jpg' %});">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="slider__content">
+                            <p>Exclusive Offer -10% Off This Week</p>
+                            <h2>We <strong>provide</strong> the best</h2>
+                            <h3> product <strong> for you </strong></h3>
+                            <h6>Starting at <span>₹44.99</span></h6>
+                            <div class="slider_btn">
+                                <a href="{% url 'shop' %}">Shopping now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Slider end-->
+
+<!--Banner area start-->
+<div class="banner_area home1_banner mt-30">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-6">
+                <div class="single_banner">
+                    <a href="#">
+                        <img src="{% static 'assets/img/banner/banner11.jpg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single_banner">
+                    <a href="#">
+                        <img src="{% static 'assets/img/banner/banner22.jpg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-6">
+                <div class="single_banner banner_three">
+                    <a href="#">
+                        <img src="{% static 'assets/img/banner/banner33.jpg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Banner area end-->
+
+<!--Features product area-->
+<div class="features_product pt-90">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title text-center">
+                    <h3> Fruit products </h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="features_product_active owl-carousel">
+                {% for i in feaufruit %}
+                <div class="col-lg-2">
+                    <div class="single__product">
+                        <div class="single_product__inner ">
+                            <div class="product_img">
+                                <a href="{% url 'productdetails' %}?cid={{i.id}}" title="Product-Details">                                        
+                                    <img src="{{i.product_image.url}}" alt="">
+                                </a>
+                            </div>
+                            <div class="product__content text-center">
+                                <div class="produc_desc_info">
+                                    <div class="product_title">
+                                        <h4>
+                                            <a href="{% url 'productdetails' %}">
+                                                {{ i.product_name }}
+                                            </a>
+                                        </h4>
+                                        <span style="display:block;font-size:12px;color:#777;">
+                                            {{ i.cat_name.cat_name }}
+                                        </span>
+                                    </div>
+                                    <div class="product_price">
+                                        <p>₹{{i.price}}</p>
+                                    </div>
+                                </div>
+                                <div class="product__hover">
+                                    <ul>
+                                        {% if i.stock > 0 %}
+                                        <li><a href="/add_to_cart/{{i.id}}">
+                                                <i class="ion-android-cart" title="Buy Now"></i>
+                                            </a>
+                                        </li>
+                                        {% else %}
+                                        <li><a href="#" onclick="return false;" style="cursor: not-allowed;"><i class="ion-android-cart" title="Out of Stock" style="color: red;"></i></a></li>
+                                        {% endif %}
+                                        <li><a href="{% url 'add_to_wishlist' i.id %}" title="Add to Wishlist"><i class="ion-heart"></i></a></li>
+                                        <li><a class="cart-fore" href="my_modal={{i.id}}" data-toggle="modal"
+                                                data-target="#my_modal{{i.id}}" title="Quick View">
+                                                <i class="ion-android-open"></i>
+                                            </a>
+                                        </li>
+                                        <li><a href="{% url 'productdetails' %}?cid={{i.id}}"
+                                                title="Product-Details"><i class="ion-clipboard"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<!--Shipping area start-->
+<div class="shipping_area">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="shipping_list d-flex justify-content-between flex-xs-column">
+                    <div class="single_shipping_box d-flex">
+                        <div class="shipping_icon">
+                            <img src="{% static 'assets/img/ship/1.png' %}" alt="shipping icon">
+                        </div>
+                        <div class="shipping_content">
+                            <h6>Free Shipping On Order Over ₹500</h6>
+                            <p>Free shipping on all order</p>
+                        </div>
+                    </div>
+                    <div class="single_shipping_box one d-flex">
+                        <div class="shipping_icon">
+                            <img src="{% static 'assets/img/ship/2.png' %}" alt="shipping icon">
+                        </div>
+                        <div class="shipping_content">
+                            <h6>Money Return</h6>
+                            <p>Back guarantee under 7 days</p>
+                        </div>
+                    </div>
+                    <div class="single_shipping_box two d-flex">
+                        <div class="shipping_icon">
+                            <img src="{% static 'assets/img/ship/3.png' %}" alt="shipping icon">
+                        </div>
+                        <div class="shipping_content">
+                            <h6>Member Discount</h6>
+                            <p>Support online 24 hours a day</p>
+                        </div>
+                    </div>
+                    <div class="single_shipping_box three d-flex">
+                        <div class="shipping_icon">
+                            <img src="{% static 'assets/img/ship/4.png' %}" alt="shipping icon">
+                        </div>
+                        <div class="shipping_content">
+                            <h6>Online Support 24/7</h6>
+                            <p>Free shipping on all order</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+
+<!--Recommended product area start-->
+<div class="recommended_product">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title text-center">
+                    <h3> Fruit Juice products </h3>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content">
+            <div class="tab-pane active show fade" id="fresh_fruit" role="tabpanel">
+                <div class="row">
+                    <div class="features_product_active owl-carousel">
+                        {% for i in js %}
+                        <div class="col-lg-2">
+                            <div class="single__product">
+                                <div class="single_product__inner">
+                                    <div class="product_img">
+                                        <a href="{% url 'productdetails' %}?cid={{i.id}}" title="Product-Details">
+                                            <img src="{{i.product_image.url}}" alt="">
+                                        </a>
+                                    </div>
+                                    <div class="product__content text-center">
+                                        <div class="produc_desc_info">
+                                            <div class="product_title">
+                                            <h4>
+                                                <a href="{% url 'productdetails' %}">
+                                                    {{ i.product_name }}
+                                                </a>
+                                                </h4>
+                                            <span style="display:block;font-size:12px;color:#777;">
+                                                {{ i.cat_name.cat_name }}
+                                            </span>
+                                            </div>
+                                            <div class="product_price">
+                                                <p>₹{{i.price}}</p>
+                                            </div>
+                                        </div>
+                                        <div class="product__hover">
+                                            <ul>
+                                                {% if i.stock > 0 %}
+                                                <li><a href="/add_to_cart/{{i.id}}"><i
+                                                            class="ion-android-cart"></i></a></li>
+                                                {% else %}
+                                                <li><a href="#" onclick="alert('Out of Stock')"><i class="ion-android-cart" style="color: grey;"
+                                                    title="Out of Stock"></i></a></li>
+                                                {% endif %}
+                                                <li><a href="{% url 'add_to_wishlist' i.id %}" title="Add to Wishlist"><i class="ion-android-favorite-outline"></i></a></li>
+                                                <li><a href="{% url 'productdetails' %}?cid={{i.id}}"
+                                                        title="Product-Details"><i class="ion-clipboard"></i></a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Recommended product area end-->
+
+<!--Banner area start-->
+<div class="banner_area home1_banner2 pb-90">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="single_banner">
+                    <a href="#">
+                        <img src="{% static 'assets/img/banner/big-11.jpg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="single_banner">
+                    <a href="#">
+                        <img src="{% static 'assets/img/banner/big-22.jpg' %}" alt="">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Banner area end-->
+
+<!--New product area-->
+<div class="new_product">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="section_title space_2 text-center">
+                    <h3>New Product</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="features_product_active owl-carousel">
+                {% for i in new %}
+                <div class="col-lg-2">
+                    <div class="single__product">
+                        <div class="single_product__inner">
+                            <span class="new_badge">new</span>
+                            <div class="product_img">
+                                <a href="{% url 'productdetails' %}?cid={{i.id}}" title="Product-Details">
+                                    <img src="{{i.product_image.url}}" alt="">
+                                </a>
+                            </div>
+                            <div class="product__content text-center">
+                                <div class="produc_desc_info">
+                                    <div class="product_title">
+                                        <h4>
+                                            <a href="{% url 'productdetails' %}">
+                                                {{ i.product_name }}
+                                            </a>
+                                        </h4>
+                                        <span style="display:block;font-size:12px;color:#777;">
+                                            {{ i.cat_name.cat_name }}
+                                        </span>
+                                    </div>
+                                    <div class="product_price">
+                                        <p>₹{{i.price}}</p>
+                                    </div>
+                                </div>
+                                <div class="product__hover">
+                                    <ul>
+                                        {% if i.stock > 0 %}
+                                        <li><a href="/add_to_cart/{{i.id}}"><i class="ion-android-cart"></i></a>
+                                        </li>
+                                        {% else %}
+                                        <li><a href="#" onclick="alert('Out of Stock')"><i class="ion-android-cart" style="color: grey;"
+                                            title="Out of Stock"></i></a></li>
+                                        {% endif %}
+                                        <li><a href="{% url 'add_to_wishlist' i.id %}" title="Add to Wishlist"><i class="ion-android-favorite-outline"></i></a></li>
+                                        <li><a href="{% url 'productdetails' %}?cid={{i.id}}"
+                                                title="Product-Details"><i class="ion-clipboard"></i></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- modal area start -->
+{% for q in prod %}
+<div class="modal fade" id="my_modal{{q.id}}" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <div class="modal-body shop">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-5 col-md-5 col-sm-12">
+                            <div class="product-flags madal">
+                                <div class="tab-content" id="pills-tabContent">
+                                    <div class="tab-pane fade show active" id="imgeone{{q.id}}" role="tabpanel">
+                                        <div class="product_tab_img">
+                                            <a href="#"><img src="{{q.product_image.url}}" alt=""></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="products_tab_button  modals">
+                                    <ul class="nav product_navactive" role="tablist">
+                                        <li>
+                                            <a class="nav-link active" data-toggle="tab" href="#imgeone{{q.id}}" role="tab"
+                                                aria-controls="imgeone{{q.id}}" aria-selected="false"><img
+                                                    src="{{q.product_image.url}}" alt=""></a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-md-7 col-sm-12">
+                            <div class="modal_right">
+                                <div class="shop_reviews">
+                                    <div class="demo_product">
+                                        <h2>{{q.product_name}}</h2>
+                                    </div>
+                                    <div class="current_price">
+                                        <span class="regular_price">₹{{q.price}}</span>
+                                    </div>
+                                    <div class="product_information product_modal">
+                                        <div class="product_variants">
+                                            <div class="quickview_plus_minus">
+                                                <span class="control_label">Quantity In Kg.</span>
+                                                <br>
+                                                <span class="control_label">1 litter juice-bottle</span>
+                                                <div class="quickview_plus_minus_inner">
+                                                    <div class="cart-plus-minus">
+                                                        <input type="text" value="02" name="qtybutton"
+                                                            class="cart-plus-minus-box">
+                                                    </div>
+                                                    <div class="add_button add_modal">
+                                                        <ul style="display: flex; align-items: center;">
+                                                            {% if q.stock > 0 %}
+                                                            <li><a href="/add_to_cart/{{q.id}}"><i
+                                                                        class="btn btn-success">Add_To_Cart</i></a>
+                                                            </li>
+                                                            {% else %}
+                                                            <li><button class="btn btn-danger" disabled>Out of Stock</button></li>
+                                                            {% endif %}
+                                                            <li style="margin-left: 10px;"><a href="{% url 'add_to_wishlist' q.id %}" title="Add to Wishlist" style="font-size: 24px; color: #333;"><i class="ion-heart"></i></a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="cart_description">
+                                                <p>{{q.description}}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="social-share">
+                                <h3>Share this product</h3>
+                                x<ul>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+{% endblock %}

@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<!--breadcrumb area start-->
+<div class="breadcrumb_container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <ul>
+                        <li>
+                            <a href="{% url 'index' %}">Home ></a>
+                        </li>
+                        <li>Product details </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumb area end-->
+
+
+<!-- primary block area -->
+
+<div class="table_primary_block pt-100">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-12">
+                <div class="product-flags">
+                    <div class="tab-content">
+                        <div class="tab-pane fade show active" id="tabone" role="tabpanel">
+                            <div class="product_tab_img">
+
+                                <a href="#"><img src="{{pid.product_image.url}}" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tabtwo" role="tabpanel">
+                            <div class="product_tab_img">
+                                <a href="#"><img src="{% static '/assets/img/cart/nav11.jpg' %}" alt=""></a>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="tabthree" role="tabpanel">
+                            <div class="product_tab_img">
+                                <a href="#"><img src="{% static '/assets/img/cart/nav13.jpg' %}" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7 col-md-7 col-sm-12">
+                <div class="product__details_content">
+                    <div class="demo_product">
+                        <h2>{{ pid.product_name }}</h2>
+                        <span style="display:block;font-size:13px;color:#777;margin-top:4px;">
+                            Category: {{ pid.cat_name.cat_name }}
+                        </span>
+                        {% if pid.cat_name.id == 6 %}
+                            <span class="control_label">Price & Quantity per Kg</span>
+                        {% elif pid.cat_name.id == 7 %}
+                            <span class="control_label">Price & Quantity per Litre</span>
+                        {% else %}
+                            <span class="control_label">Standard Quantity</span>
+                        {% endif %}
+                    </div>
+                    <div class="current_price">
+                        <span>
+                            ₹{{ pid.price }}
+                            {% if pid.cat_name.id == 6 %}
+                                / kg
+                            {% elif pid.cat_name.id == 7 %}
+                                / litre
+                            {% endif %}
+                        </span>
+                    </div>
+                    <div class="product_information">
+                        <div id="product_description_short">
+                            <p>{{pid.description}}</p>
+                        </div>
+                        <div class="product_variants">
+
+                            <div class="quickview_plus_minus">
+                                <div class="quickview_plus_minus_inner">
+                                    <div class="add_button add_modal">
+                                        <ul style="display: flex; align-items: center;">
+                                            {% if pid.stock > 0 %}
+                                            <li><a href="/add_to_cart/{{pid.id}}"><i
+                                                        class="btn btn-success">Add To Cart</i></a></li>
+                                            {% else %}
+                                            <li><button class="btn btn-danger" disabled>Out of Stock</button></li>
+                                            {% endif %}
+                                            <li style="margin-left: 10px;"><a href="{% url 'add_to_wishlist' pid.id %}" title="Add to Wishlist" style="font-size: 24px; color: #333;"><i class="ion-heart"></i></a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="product-availability">
+                                <span id="availability">
+                                    {% if pid.stock > 0 %}
+                                    <i class="zmdi zmdi-check"></i> In stock ({{pid.stock}} available)
+                                    {% else %}
+                                    <i class="zmdi zmdi-close"></i> Out of stock
+                                    {% endif %}
+                                </span>
+                            </div>
+                            <div class="social-sharing">
+                                <span>Share</span>
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-google-plus" aria-hidden="true"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest" aria-hidden="true"></i></a></li>
+                                </ul>
+                            </div>
+                            <div class="block-reassurance">
+                                <ul>
+                                    <li>
+                                        <img src="{% static '/assets/img/cart/cart1.png' %}" alt="">
+                                        <span>Security policy </span>
+                                    </li>
+                                    <li>
+                                        <img src="{% static '/assets/img/cart/cart2.png' %}" alt="">
+                                        <span>Delivery policy </span>
+                                    </li>
+                                    <li>
+                                        <img src="{% static '/assets/img/cart/cart3.png' %}" alt="">
+                                        <span>Return policy </span>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Review Section removed: product reviews feature disabled -->
+{% endblock %}

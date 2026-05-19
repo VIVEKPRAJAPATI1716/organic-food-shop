@@ -1,0 +1,288 @@
+{% load static %}
+
+<!doctype html>
+<html class="no-js" lang="zxx">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>OrganicFood</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static '/assets/img/favicon.png' %}">
+
+    <!-- all css here -->
+    <link rel="stylesheet" href="{% static '/assets/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/animate.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/owl.carousel.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/icofont.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/chosen.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/magnific-popup.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/ionicons.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/material-design-iconic-font.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/meanmenu.min.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/bundle.css' %}">
+    <link rel="stylesheet" href="{% static '/assets/css/style.css' %}?v=2">
+    <link rel="stylesheet" href="{% static '/assets/css/responsive.css' %}">
+    <script src="{% static '/assets/js/vendor/modernizr-2.8.3.min.js' %}"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+
+<body>
+    <!-- Add your site or application content here -->
+
+    <!--organicfood wrapper start-->
+    <div class="organic_food_wrapper">
+        <!--Header start-->
+        <header class="header sticky-header">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="header_wrapper_inner">
+
+                            <div class="logo col-xs-12">
+                                <a href="{% url 'index' %}">
+                                    <img src="{% static '/assets/img/logo/logo.png' %}" alt="">
+                                </a>
+                            </div>
+
+
+                            <div class="main_menu_inner">
+
+                                <div class="menu">
+                                    <nav>
+                                        <ul>
+
+                                            <li><a href="{% url 'index' %}">Home </a> </li>
+                                            <li><a href="{% url 'about' %}">about us </a> </li>
+                                            <li><a href="{% url 'shop' %}">shop</a> </li>
+                                            <li><a href="{% url 'feedback' %}">Feedback </a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+
+                                <div class="mobile-menu d-lg-none">
+                                    <nav>
+                                        <ul>
+                                            <li class="active"><a href="{% url 'index' %}">Home</a></li>
+                                            <li><a href="{% url 'about' %}">about us </a></li>
+                                            <li><a href="{% url 'shop' %}">shop</a></li>
+                                            <li><a href="{% url 'feedback' %}">Feedback </a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            </div>
+                            <div class="header_right_info d-flex">
+                                <div class="header_search_box" style="margin-right: 15px;">
+                                    <form action="{% url 'search' %}" method="GET" style="display: flex; align-items: center;">
+                                        <input type="text" name="q" placeholder="Search..." style="border: 1px solid #ddd; padding: 5px 10px; border-radius: 4px 0 0 4px; height: 35px; outline: none;">
+                                        <button type="submit" style="background: #78a206; border: none; color: white; height: 35px; padding: 0 15px; border-radius: 0 4px 4px 0; cursor: pointer;">
+                                            <i class="ion-ios-search-strong"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                <div class="mini__cart" style="margin-right: 15px;">
+                                    <div class="mini_cart_inner">
+                                        <div class="cart_icon">
+                                            <a href="{% url 'wishlist' %}" title="Wishlist">
+                                                <span class="cart_icon_inner">
+                                                    <i class="ion-heart"></i>
+                                                </span>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="mini__cart">
+                                    <div class="mini_cart_inner">
+                                        <div class="cart_icon">
+                                            <a href="{% url 'cart' %}">
+                                                <span class="cart_icon_inner">
+                                                    <i class="ion-android-cart"></i>
+                                                </span>
+                                            </a>
+                                        </div>
+
+                                    </div>
+                                </div>
+                                <div class="header_account">
+                                    <div class="account_inner">
+                                        <a href="#"><i class="ion-gear-b"></i></a>
+                                    </div>
+                                    <div class="content-setting-dropdown">
+                                        <div class="language-selector-wrapper">
+                                            <div class="user_info_top">
+                                                <ul>
+                                                    <li><a href="{% url 'myaccount' %}">my account</a></li>
+                                                    {% if request.session.user %}
+                                                    <li><a href="{% url 'myorder' %}">My Order</a></li>
+                                                    <li><a href="{% url 'logout' %}">Logout</a></li>
+                                                    {% else %}
+                                                    <li><a href="{% url 'register' %}">Register</a></li>
+                                                    <li><a href="{% url 'login' %}">Sign in</a></li>
+                                                    {% endif %}
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--Header end-->
+
+        {% include 'msg.html' %}
+
+        {% block base %}
+        {% endblock %}
+
+        <!-- footer start -->
+
+            <footer class="footer footer_about pt-90">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-lg-3 col-md-12 col-xs-12">
+                            <!--Single Footer-->
+                            <div class="single_footer widget">
+                                <div class="single_footer_widget_inner">
+                                    <div class="footer_logo">
+                                        <a href="#"><img src="{% static 'assets/img/logo/logo_footer.png' %}"
+                                                alt=""></a>
+                                    </div>
+                                    <div class="footer_content">
+                                        <p>Address: Maruti Plaza, Radhanpur, Patan, Gujarat - INDIA.</p>
+                                        <p>Phone: +(91)88496 52715</p>
+                                        <p>Mobile: +(91)63529 54772</p>
+                                        <p>Email: organicfoodshop2026@gmail.com</p>
+                                    </div>
+                                    <div class="footer_social">
+                                        <h4>Get in Touch:</h4>
+                                        <div class="footer_social_icon">
+                                            <a href="https://twitter.com" target="_blank"><i class="fa fa-twitter"></i></a>
+                                            <a href="https://google.com" target="_blank"><i class="fa fa-google-plus"></i></a>
+                                            <a href="https://facebook.com" target="_blank"><i class="fa fa-facebook"></i></a>
+                                            <a href="https://youtube.com" target="_blank"><i class="fa fa-youtube"></i></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--Single Footer-->
+                        </div>
+                        <div class="col-lg-6 col-md-12 col-xs-12">
+                            <div class="footer_menu_list d-flex justify-content-between">
+                                <!--Single Footer-->
+                                <div class="single_footer widget">
+                                    <div class="single_footer_widget_inner">
+                                        <div class="footer_title">
+                                            <h2>Products</h2>
+                                        </div>
+                                        <div class="footer_menu">
+                                            <ul>
+                                                <li><a href="{% url 'shop' %}?category=new"> New products</a></li>
+                                                <!-- <li><a href="#"> Best sales</a></li> -->
+                                                <li><a href="{% url 'shop' %}?category=fruits">Fruits</a></li>
+                                                <li><a href="{% url 'shop' %}?category=juice">Fruits Juice</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Single footer end-->
+                                <!--Single footer start-->
+                                <div class="single_footer widget">
+                                    <div class="single_footer_widget_inner">
+                                        <div class="footer_title">
+                                            <h2>Login</h2>
+                                        </div>
+                                        <div class="footer_menu">
+                                            <ul>
+                                                <li><a href="{% url 'login' %}"> Login</a></li>
+                                                <li><a href="{% url 'feedback' %}">Feedback</a></li>
+                                                <li><a href="{% url 'myaccount' %}"> My account</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Single Footer end-->
+                                <!--Single footer start-->
+                                <div class="single_footer widget">
+                                    <div class="single_footer_widget_inner">
+                                        <div class="footer_title">
+                                            <h2>Your Account</h2>
+                                        </div>
+                                        <div class="footer_menu">
+                                            <ul>
+                                                <li><a href="{% url 'myaccount' %}">My Account</a></li>
+                                                <li><a href="{% url 'myorder' %}">My Orders</a></li>
+                                                <li><a href="{% url 'wishlist' %}">My Wishlist</a></li>
+                                                <li><a href="{% url 'cart' %}">My Cart</a></li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Single Footer end-->
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 col-xs-12">
+                            <div class="footer_title">
+                                <h2> Write Your Thinks </h2>
+                            </div>
+                            <div class="footer_news_letter">
+                                <p>Get E-mail updates about our latest shop and special offers.</p>
+                                <div class="newsletter_form">
+                                    <form action="#">
+                                        <input type="email" required placeholder="Your Email Address">
+                                        <input type="submit" value="Subscribe">
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="copyright">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-xs-12">
+                                <div class="copyright_text">
+                                    <p>Copyright 2026 <a href="#">Organicfood</a>. All Rights Reserved</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-xs-12">
+                                <div class="footer_mastercard text-right">
+                                    <a href="#"><img src="{% static 'assets/img/brand/payment.png' %}" alt=""></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </footer>
+
+            <!-- footer end -->
+        </div>
+
+
+        <!--organicfood wrapper end-->
+
+
+
+
+
+
+        <!-- all js here -->
+        <script src="{% static '/assets/js/vendor/jquery-1.12.0.min.js' %}"></script>
+        <script src="{% static '/assets/js/popper.js' %}"></script>
+        <script src="{% static '/assets/js/bootstrap.min.js' %}"></script>
+        <script src="{% static '/assets/js/waypoints.min.js' %}"></script>
+        <script src="{% static '/assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static '/assets/js/plugins.js' %}"></script>
+        <script src="{% static '/assets/js/main.js' %}"></script>
+        {% block extra_js %}{% endblock %}
+</body>
+
+</html>

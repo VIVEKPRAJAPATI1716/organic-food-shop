@@ -1,0 +1,193 @@
+/* My Account Page Styling */
+.myaccount-hero {
+    background: linear-gradient(135deg, #78a206 0%, #5d7e05 100%);
+    color: #fff;
+    padding: 40px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(120, 162, 6, 0.2);
+}
+
+.myaccount-hero-avatar {
+    width: 100px;
+    height: 100px;
+    background: rgba(255, 255, 255, 0.2);
+    border: 3px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    font-weight: 700;
+    margin-bottom: 20px;
+}
+
+.myaccount-hero-text h2 {
+    color: #fff;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+
+.myaccount-hero-text p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+}
+
+.myaccount-stats-card {
+    background: #fff;
+    border: none;
+    border-radius: 15px;
+    padding: 25px;
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    height: 100%;
+}
+
+.myaccount-stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
+
+.myaccount-stats-icon {
+    width: 50px;
+    height: 50px;
+    background: #f0f7e6;
+    color: #78a206;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin: 0 auto 15px;
+}
+
+.myaccount-stats-value {
+    font-size: 28px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+.myaccount-stats-label {
+    color: #6c757d;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.myaccount-sidebar {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+.myaccount-nav-link {
+    padding: 15px 25px;
+    color: #495057;
+    font-weight: 600;
+    border-left: 4px solid transparent;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+}
+
+.myaccount-nav-link i {
+    margin-right: 12px;
+    font-size: 18px;
+    width: 20px;
+    text-align: center;
+}
+
+.myaccount-nav-link:hover, .myaccount-nav-link.active {
+    background: #f8f9fa;
+    color: #78a206;
+    border-left-color: #78a206;
+}
+
+.myaccount-card {
+    background: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+}
+
+.myaccount-card-header {
+    padding: 20px 25px;
+    border-bottom: 1px solid #f1f1f1;
+    background: transparent;
+}
+
+.myaccount-card-header h3 {
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+}
+
+.myaccount-card-body {
+    padding: 25px;
+}
+
+.status-badge {
+    padding: 6px 12px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.status-pending { background: #fff3cd; color: #856404; }
+.status-placed { background: #cce5ff; color: #004085; }
+.status-shipped { background: #d1ecf1; color: #0c5460; }
+.status-delivered { background: #d4edda; color: #155724; }
+.status-cancelled { background: #f8d7da; color: #721c24; }
+
+.table-modern thead th {
+    background: #f8f9fa;
+    border: none;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #6c757d;
+    padding: 15px;
+}
+
+.table-modern tbody td {
+    padding: 15px;
+    vertical-align: middle;
+    border-top: 1px solid #f1f1f1;
+}
+
+.form-control-modern {
+    height: 50px;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+    padding: 10px 20px;
+}
+
+.form-control-modern:focus {
+    border-color: #78a206;
+    box-shadow: 0 0 0 0.2rem rgba(120, 162, 6, 0.1);
+}
+
+.btn-modern {
+    padding: 12px 30px;
+    border-radius: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: all 0.3s;
+}
+
+.btn-modern-primary {
+    background: #78a206;
+    color: #fff;
+    border: none;
+}
+
+.btn-modern-primary:hover {
+    background: #5d7e05;
+    color: #fff;
+    transform: translateY(-2px);
+}

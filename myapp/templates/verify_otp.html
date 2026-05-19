@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block base %}
+
+<!--breadcrumb area start-->
+<div class="breadcrumb_container">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <nav>
+                    <ul>
+                        <li><a href="{% url 'index' %}">Home</a> ></li>
+                        <li>Verify OTP</li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+<!--breadcrumb area end-->
+
+<!--login section start-->
+<div class="page_login_section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3 col-md-8 offset-md-2 col-sm-10 offset-sm-1">
+                <div class="login_page_form">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="input_text">
+                                    <label for="otp">Enter OTP sent to your email <span>*</span></label>
+                                    <input id="otp" type="text" name='otp' required>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="login_submit">
+                                    <input class="inline" value="Verify OTP" type="submit">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
